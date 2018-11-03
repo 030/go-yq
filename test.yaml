@@ -2,3 +2,10 @@ a: abc
 b: def
 c: ghi
 under_scores: ensure that keys may contain an underscore
+hihi: world
+services:
+  db:
+    image: someimage
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
