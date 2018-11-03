@@ -25,7 +25,7 @@ func scanFile(file string, key string) string {
 
 	for scanner.Scan() {
 		logrus.Debug("Check whether file: ", file, " and line: ", scanner.Text(), " contains key: ", key)
-		if strings.Contains(scanner.Text(), key+":") {
+		if strings.Contains(scanner.Text(), key+": ") {
 			val = value(scanner.Text())
 		}
 	}
@@ -38,7 +38,7 @@ func scanFile(file string, key string) string {
 }
 
 func value(keyValue string) string {
-	re := regexp.MustCompile("^[a-z-_]+: (.*)$")
+	re := regexp.MustCompile("[A-Z-a-z-_]+: (.*)$")
 	match := re.FindStringSubmatch(keyValue)
 
 	if len(match) == 0 {
