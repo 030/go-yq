@@ -38,7 +38,7 @@ func scanFile(file string, key string) string {
 }
 
 func value(keyValue string) string {
-	re := regexp.MustCompile("[A-Z-a-z-_]+: (.*)$")
+	re := regexp.MustCompile("[0-9-A-Z-a-z-_]+: (.*)$")
 	match := re.FindStringSubmatch(keyValue)
 
 	if len(match) == 0 {
