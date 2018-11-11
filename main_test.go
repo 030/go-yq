@@ -10,6 +10,7 @@ func TestScanFile(t *testing.T) {
 		"under_scores":        "ensure that keys may contain an underscore",
 		"image":               "someimage",
 		"MYSQL_ROOT_PASSWORD": "somewordpress",
+		"thiscontainsadigit1": "helloworld1",
 	}
 
 	for key, value := range keyValue {

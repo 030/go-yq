@@ -9,3 +9,4 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
+thiscontainsadigit1: helloworld1
