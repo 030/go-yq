@@ -2,14 +2,11 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"log"
 	"os"
 	"regexp"
 	"strings"
-
-	"github.com/sirupsen/logrus"
 )
 
 func scanFile(file string, key string) string {
@@ -24,7 +21,6 @@ func scanFile(file string, key string) string {
 	var val string
 
 	for scanner.Scan() {
-		logrus.Debug("Check whether file: ", file, " and line: ", scanner.Text(), " contains key: ", key)
 		if strings.Contains(scanner.Text(), key+": ") {
 			val = value(scanner.Text())
 		}
@@ -38,7 +34,7 @@ func scanFile(file string, key string) string {
 }
 
 func value(keyValue string) string {
-	re := regexp.MustCompile("[0-9-A-Z-a-z-_]+: (.*)$")
+	re := regexp.MustCompile("[0-9A-Za-z_]+: ([0-9A-Za-z_:]+).*$")
 	match := re.FindStringSubmatch(keyValue)
 
 	if len(match) == 0 {
@@ -46,28 +42,20 @@ func value(keyValue string) string {
 			"' please check whether the regex matches the key")
 	}
 
-	logrus.Debug("MATCH: ", match)
-
 	return match[1]
 }
 
 func main() {
-	key := flag.String("key", "key", "Specify the key")
-	yamlFile := flag.String("yamlFile", "file.yaml", "Path to a yaml file")
-	debug := flag.Bool("debug", false, "Whether debugging should be enabled")
-
-	flag.Parse()
-
-	if *debug {
-		logrus.SetLevel(logrus.DebugLevel)
+	if len(os.Args) <= 2 {
+		log.Fatal("Usage: go-yq <key e.g. .foo.bar> <filename e.g. input.yaml>")
 	}
 
-	logrus.Debug("key: ", *key)
-	logrus.Debug("yamlFile: ", *yamlFile)
+	key := os.Args[1]
+	yamlFile := os.Args[2]
 
-	value := scanFile(*yamlFile, *key)
+	value := scanFile(yamlFile, key)
 	if value == "" {
-		log.Fatal("File: ", *yamlFile, " does not contain key: ", *key)
+		log.Fatal("File: ", yamlFile, " does not contain key: ", key)
 	}
 	fmt.Println(value)
 }
