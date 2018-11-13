@@ -12,28 +12,23 @@ go-yq was created to prevent that pip has to be installed in order to install yq
 
 ```
 [user@localhost go-yq]$ ./go-yq -h
-Usage of ./go-yq:
-  -debug
-    	Whether debugging should be enabled
-  -key string
-    	Specify the key (default "key")
-  -yamlFile string
-    	Path to a yaml file (default "file.yaml")
+2018/11/13 12:07:39 Usage: go-yq <key e.g. .foo.bar> <filename e.g. input.yaml>
+exit status 1
 ```
 
 ### example
 
 ```
-[user@localhost go-yq]$ ./go-yq -yamlFile /home/user/dev/ansible-firefox/defaults/main.yml -key firefox_version
+[user@localhost go-yq]$ ./go-yq go run main.go .firefox_version ~/dev/ansible-firefox/defaults/main.yml
 ```
 
 returns:
 
 ```
-62.0.3
+63.0.1
 ```
 
-### dependencies
+## Dependencies
 
 ```
 go get github.com/spf13/viper
