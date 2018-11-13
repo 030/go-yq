@@ -23,3 +23,20 @@ func TestScanFile(t *testing.T) {
 		}
 	}
 }
+
+func TestMultiLineToSingleKey(t *testing.T) {
+	keyValue := map[string]string{
+		"foo: a": ".foo",
+		// "foo: a\nboo: c": ".foo",
+		"foo:\n  bar: b":         ".foo.bar",
+		"foo:\n  bar:\n  boo: c": ".foo.bar.boo",
+	}
+
+	for key, value := range keyValue {
+		expected := value
+		actual := multiLineToSingleKey(key)
+		if expected != actual {
+			t.Errorf("Expected %s, but was %s", expected, actual)
+		}
+	}
+}

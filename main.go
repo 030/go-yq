@@ -34,8 +34,8 @@ func scanFile(file string, key string) string {
 }
 
 func value(keyValue string) string {
-	re := regexp.MustCompile("[0-9A-Za-z_]+: ([0-9A-Za-z_:]+).*$")
-	match := re.FindStringSubmatch(keyValue)
+	r := regexp.MustCompile("[0-9A-Za-z_]+: ([0-9A-Za-z_:]+).*$")
+	match := r.FindStringSubmatch(keyValue)
 
 	if len(match) == 0 {
 		log.Fatal("Cannot extract value for key, but was: '", keyValue,
@@ -43,6 +43,17 @@ func value(keyValue string) string {
 	}
 
 	return match[1]
+}
+
+func multiLineToSingleKey(key string) string {
+	startWithDot := "." + key
+	newLineToSingleLine := strings.Replace(startWithDot, "\n  ", ".", -1)
+	removedAllColons := strings.Replace(newLineToSingleLine, ":", "", -1)
+
+	r := regexp.MustCompile(`(^\..*)\s.*$`)
+	removedValue := r.ReplaceAllString(removedAllColons, "${1}")
+
+	return removedValue
 }
 
 func main() {
