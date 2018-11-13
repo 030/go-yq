@@ -2,7 +2,6 @@ a: abc
 b: def
 c: ghi
 under_scores: ensureThatKeysMayContainAnUnderscore
-hihi: world
 services:
   db:
     image: someimage

@@ -5,17 +5,18 @@ import (
 	"testing"
 )
 
-func TestScanFile(t *testing.T) {
+func TestYamlValue(t *testing.T) {
 	keyValue := map[string]string{
-		"a": "abc",
-		"b": "def",
-		"c": "ghi",
-		// "under_scores":        "ensureThatKeysMayContainAnUnderscore",
-		// "image":               "someimage",
-		// "MYSQL_ROOT_PASSWORD": "somewordpress",
-		// "thiscontainsadigit1": "helloworld1",
-		// "alloallo":            "hallohallo",
-		// "firefox_checksum":    "sha512:49d776",
+		"a":                   "abc",
+		"b":                   "def",
+		"c":                   "ghi",
+		"under_scores":        "ensureThatKeysMayContainAnUnderscore",
+		"thiscontainsadigit1": "helloworld1",
+		"alloallo":            "hallohallo",
+		"firefox_checksum":    "sha512:49d776",
+		"foo.bar":             "boo",
+		"services.db.image":   "someimage",
+		"services.db.environment.MYSQL_ROOT_PASSWORD": "somewordpress",
 	}
 
 	for key, value := range keyValue {
