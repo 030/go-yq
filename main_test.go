@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"path/filepath"
+	"testing"
+)
 
 func TestScanFile(t *testing.T) {
 	keyValue := map[string]string{
@@ -24,19 +27,31 @@ func TestScanFile(t *testing.T) {
 	}
 }
 
-func TestMultiLineToSingleKey(t *testing.T) {
+func TestDir(t *testing.T) {
 	keyValue := map[string]string{
-		"foo: a": ".foo",
-		// "foo: a\nboo: c": ".foo",
-		"foo:\n  bar: b":         ".foo.bar",
-		"foo:\n  bar:\n  boo: c": ".foo.bar.boo",
+		"path/to/some.yaml": filepath.Join("path", "to"),
+		"hello.yaml":        ".",
+	}
+	for key, value := range keyValue {
+		expected := value
+		actual := dir(key)
+		if expected != actual {
+			t.Errorf("got value: %s, want: %s.", actual, expected)
+		}
+	}
+}
+
+func TestFile(t *testing.T) {
+	keyValue := map[string]string{
+		"path/to/some.yaml": "some",
+		"hello.yaml":        "hello",
 	}
 
 	for key, value := range keyValue {
 		expected := value
-		actual := multiLineToSingleKey(key)
+		actual := filename(key)
 		if expected != actual {
-			t.Errorf("Expected %s, but was %s", expected, actual)
+			t.Errorf("got value: %s, want: %s.", actual, expected)
 		}
 	}
 }

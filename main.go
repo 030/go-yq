@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -45,28 +45,29 @@ func value(keyValue string) string {
 	return match[1]
 }
 
-func multiLineToSingleKey(key string) string {
-	startWithDot := "." + key
-	newLineToSingleLine := strings.Replace(startWithDot, "\n  ", ".", -1)
-	removedAllColons := strings.Replace(newLineToSingleLine, ":", "", -1)
+func dir(path string) string {
+	return filepath.Dir(path)
+}
 
-	r := regexp.MustCompile(`(^\..*)\s.*$`)
-	removedValue := r.ReplaceAllString(removedAllColons, "${1}")
+func filename(path string) string {
+	basename := filepath.Base(path)
+	filename := strings.TrimSuffix(basename, filepath.Ext(basename))
 
-	return removedValue
+	return filepath.Base(filename)
 }
 
 func main() {
-	if len(os.Args) <= 2 {
-		log.Fatal("Usage: go-yq <key e.g. .foo.bar> <filename e.g. input.yaml>")
-	}
+	// if len(os.Args) <= 2 {
+	// 	log.Fatal("Usage: go-yq <key e.g. .foo.bar> <filename e.g. input.yaml>")
+	// }
 
-	key := os.Args[1]
-	yamlFile := os.Args[2]
+	// key := os.Args[1]
+	// yamlFile := os.Args[2]
 
-	value := scanFile(yamlFile, key)
-	if value == "" {
-		log.Fatal("File: ", yamlFile, " does not contain key: ", key)
-	}
-	fmt.Println(value)
+	// value := scanFile(yamlFile, key)
+	// if value == "" {
+	// 	log.Fatal("File: ", yamlFile, " does not contain key: ", key)
+	// }
+	// fmt.Println(value)
+
 }

@@ -32,3 +32,9 @@ returns:
 ```
 62.0.3
 ```
+
+### dependencies
+
+```
+go get github.com/spf13/viper
+```
