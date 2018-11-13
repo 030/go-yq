@@ -13,6 +13,7 @@ import (
 func yamlValue(file string, key string) string {
 	viper.SetConfigType("yaml")
 
+	verifyKey(key)
 	keyWithoutFirstDot := strings.Replace(key, ".", "", 1)
 
 	filename := filename(file)
@@ -39,6 +40,12 @@ func filename(path string) string {
 	filename := strings.TrimSuffix(basename, filepath.Ext(basename))
 
 	return filepath.Base(filename)
+}
+
+func verifyKey(key string) {
+	if !strings.HasPrefix(key, ".") {
+		log.Fatal("Key should start with a dot, i.e.: ."+key+", but was: ", key)
+	}
 }
 
 func main() {
