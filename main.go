@@ -1,48 +1,25 @@
 package main
 
 import (
-	"bufio"
-	"log"
-	"os"
+	"fmt"
 	"path/filepath"
-	"regexp"
 	"strings"
+
+	"github.com/spf13/viper"
 )
 
-func scanFile(file string, key string) string {
-	f, err := os.Open(file)
+func yamlValue(file string, key string) string {
+	viper.SetConfigType("yaml")
+	viper.SetConfigName("test")
+	viper.AddConfigPath(".")
+
+	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatal(err)
+		panic(fmt.Errorf("fatal error config file: %s", err))
 	}
-	defer f.Close()
+	value := fmt.Sprintf("%s", viper.Get(key))
 
-	scanner := bufio.NewScanner(f)
-
-	var val string
-
-	for scanner.Scan() {
-		if strings.Contains(scanner.Text(), key+": ") {
-			val = value(scanner.Text())
-		}
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-
-	return val
-}
-
-func value(keyValue string) string {
-	r := regexp.MustCompile("[0-9A-Za-z_]+: ([0-9A-Za-z_:]+).*$")
-	match := r.FindStringSubmatch(keyValue)
-
-	if len(match) == 0 {
-		log.Fatal("Cannot extract value for key, but was: '", keyValue,
-			"' please check whether the regex matches the key")
-	}
-
-	return match[1]
+	return value
 }
 
 func dir(path string) string {
