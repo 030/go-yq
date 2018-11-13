@@ -13,6 +13,8 @@ import (
 func yamlValue(file string, key string) string {
 	viper.SetConfigType("yaml")
 
+	keyWithoutFirstDot := strings.Replace(key, ".", "", 1)
+
 	filename := filename(file)
 	viper.SetConfigName(filename)
 
@@ -23,7 +25,7 @@ func yamlValue(file string, key string) string {
 	if err != nil {
 		panic(fmt.Errorf("fatal error config file: %s", err))
 	}
-	value := fmt.Sprintf("%s", viper.Get(key))
+	value := fmt.Sprintf("%s", viper.Get(keyWithoutFirstDot))
 
 	return value
 }
