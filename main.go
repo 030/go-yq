@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -10,8 +12,12 @@ import (
 
 func yamlValue(file string, key string) string {
 	viper.SetConfigType("yaml")
-	viper.SetConfigName("test")
-	viper.AddConfigPath(".")
+
+	filename := filename(file)
+	viper.SetConfigName(filename)
+
+	dir := dir(file)
+	viper.AddConfigPath(dir)
 
 	err := viper.ReadInConfig()
 	if err != nil {
@@ -34,17 +40,16 @@ func filename(path string) string {
 }
 
 func main() {
-	// if len(os.Args) <= 2 {
-	// 	log.Fatal("Usage: go-yq <key e.g. .foo.bar> <filename e.g. input.yaml>")
-	// }
+	if len(os.Args) <= 2 {
+		log.Fatal("Usage: go-yq <key e.g. .foo.bar> <filename e.g. input.yaml>")
+	}
 
-	// key := os.Args[1]
-	// yamlFile := os.Args[2]
+	key := os.Args[1]
+	yamlFile := os.Args[2]
 
-	// value := scanFile(yamlFile, key)
-	// if value == "" {
-	// 	log.Fatal("File: ", yamlFile, " does not contain key: ", key)
-	// }
-	// fmt.Println(value)
-
+	value := yamlValue(yamlFile, key)
+	if value == "" {
+		log.Fatal("File: ", yamlFile, " does not contain key: ", key)
+	}
+	fmt.Println(value)
 }
