@@ -13,3 +13,8 @@ alloallo: hallohallo  # yamllint disable-line rule:line-length
 foo:
   bar: boo
 firefox_checksum: sha512:49d776
+hello:
+  world: hallo wereld
+world:
+  - hola
+  - hallo
