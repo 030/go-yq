@@ -17,6 +17,8 @@ func TestYamlValue(t *testing.T) {
 		".foo.bar":             "boo",
 		".services.db.image":   "someimage",
 		".services.db.environment.MYSQL_ROOT_PASSWORD": "somewordpress",
+		".world":       "[hola hallo]",
+		".hello.world": "hallo wereld",
 	}
 
 	for key, value := range keyValue {
