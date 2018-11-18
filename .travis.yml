@@ -1,11 +1,7 @@
 language: go
-stages:
-  - test
-  - name: release
-    if: branch = master
-jobs:
-  include:
-    - stage: compile
-      script: go test
-    - stage: release
-      script: ./release
+  - provider: script
+    script: go test
+  - provider: script
+    script: ./release.sh
+    on:
+      branch: master
