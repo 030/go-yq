@@ -1,2 +1,11 @@
 language: go
-script: go test
+stages:
+  - test
+  - name: release
+    if: branch = master
+jobs:
+  include:
+    - stage: compile
+      script: go test
+    - stage: release
+      script: ./release
