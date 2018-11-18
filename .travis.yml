@@ -1,4 +1,16 @@
 language: go
 script:
   - go test
-  - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then ./release.sh; fi
+deploy:
+  provider: releases
+  api_key: $TOKEN
+  file:
+    - go-yq-darwin
+    - go-yq-darwin.sha512.txt
+    - go-yq-linux
+    - go-yq-linux.sha512.txt
+    - go-yq-windows.exe
+    - go-yq-windows.exe.sha512.txt
+  skip_cleanup: true
+  on:
+    tags: true
