@@ -10,16 +10,20 @@ import (
 	"github.com/spf13/viper"
 )
 
-func yamlValue(file string, key string) string {
+type input struct {
+	key, file string
+}
+
+func (i input) value() string {
+	verifyKey(i.key)
+	keyWithoutFirstDot := strings.Replace(i.key, ".", "", 1)
+
 	viper.SetConfigType("yaml")
 
-	verifyKey(key)
-	keyWithoutFirstDot := strings.Replace(key, ".", "", 1)
-
-	filename := filename(file)
+	filename := filename(i.file)
 	viper.SetConfigName(filename)
 
-	dir := dir(file)
+	dir := dir(i.file)
 	viper.AddConfigPath(dir)
 
 	err := viper.ReadInConfig()
@@ -27,6 +31,10 @@ func yamlValue(file string, key string) string {
 		panic(fmt.Errorf("fatal error config file: %s", err))
 	}
 	value := fmt.Sprintf("%s", viper.Get(keyWithoutFirstDot))
+
+	if value == "%!s(<nil>)" {
+		log.Fatal("File: ", i.file, " does not contain key: ", i.key)
+	}
 
 	return value
 }
@@ -53,12 +61,7 @@ func main() {
 		log.Fatal("Usage: go-yq <key e.g. .foo.bar> <filename e.g. input.yaml>")
 	}
 
-	key := os.Args[1]
-	yamlFile := os.Args[2]
+	i := input{key: os.Args[1], file: os.Args[2]}
 
-	value := yamlValue(yamlFile, key)
-	if value == "" {
-		log.Fatal("File: ", yamlFile, " does not contain key: ", key)
-	}
-	fmt.Println(value)
+	fmt.Println(i.value())
 }
