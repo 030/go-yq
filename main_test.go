@@ -7,23 +7,25 @@ import (
 
 func TestYamlValue(t *testing.T) {
 	keyValue := map[string]string{
-		".a":                   "abc",
-		".b":                   "def",
-		".c":                   "ghi",
-		".under_scores":        "ensureThatKeysMayContainAnUnderscore",
-		".thiscontainsadigit1": "helloworld1",
-		".alloallo":            "hallohallo",
-		".firefox_checksum":    "sha512:49d776",
-		".foo.bar":             "boo",
-		".services.db.image":   "someimage",
+		".a":                                           "abc",
+		".b":                                           "def",
+		".c":                                           "ghi",
+		".under_scores":                                "ensureThatKeysMayContainAnUnderscore",
+		".thiscontainsadigit1":                         "helloworld1",
+		".alloallo":                                    "hallohallo",
+		".firefox_checksum":                            "sha512:49d776",
+		".foo.bar":                                     "boo",
+		".services.db.image":                           "someimage",
 		".services.db.environment.MYSQL_ROOT_PASSWORD": "somewordpress",
 		".world":       "[hola hallo]",
 		".hello.world": "hallo wereld",
 	}
 
 	for key, value := range keyValue {
+		i := input{key: key, file: "test"}
+
 		expected := value
-		actual := yamlValue("test", key)
+		actual := i.value()
 		if expected != actual {
 			t.Errorf("Value was incorrect 'Check whether the key '%s' resides in the test yaml file', got value: %s, want: %s.", key, actual, expected)
 		}
