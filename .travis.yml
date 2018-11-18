@@ -4,6 +4,7 @@ script:
   - ./releases.sh
 deploy:
   provider: releases
+  api_key: $GITHUB_TOKEN
   file:
     - go-yq-darwin
     - go-yq-darwin.sha512.txt
@@ -14,5 +15,3 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-  api_key:
-    secure: UnRC/rYr7p77HMUp5lgyN0cQP6kYUg54WjSy0i5EOEDl0gsAzf5Hi2JrxLl6qKV+KvN5PsPWdRT3Tevh3dv4XvU0mVQocu9SlsOcwFyE9anzuxY3AzoH31d+rn7cU+BFY02+l1jQIBMtI7WCKfygtSzTScRM/vcNOFqd7gMVvwCXkINrG3rbovFy4ShTvfsm80JZLbDJmzsLp4IqmxfYv11u6P8Ctp5ACpir0S7mnCd4YA+/k/Z4uBiV+V3gCYk3UMKrAhsdrAWEDnLCDVClsPxtmM/CXR9tiIdesI11F4C+Hlis9MPpwko7bvpFAYBWZX7hfCMcR2Owdy7I6gyg1uU2tpX2ew591QAUTNHjcNDl2qcBg5g1E7EMnfpC2vdarVFQQy++pyHzOEU0Q1n7B06CHMGysaKaGoP6fe3t8U79+TuOcCeC0Xw99h+s2Tehnkpxv13yvRvI7a0lUQGfDVSOUEhU/QguyGWGDsIaWV0LGHU7EC2o98CY6QLePtB1tzGkRromIlL8r02Kt487EQg7iszcopiMh2R3QnnWRbGz7CyrC+fORQbScr6uHk6U9G3+od5DQuH6iJW8YvBoOrptDRklx2G5q4KVvLW0TpC4+/SVDiZ1kGxnJLk4jJTZHaoTedFkIOI1tYrxiqf1r2ISOU7bPT84Q76IwuwQFvQ=
