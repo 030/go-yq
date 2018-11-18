@@ -1,0 +1,17 @@
+language: go
+script:
+  - go test
+  - ./releases.sh
+deploy:
+  provider: releases
+  api_key: $TOKEN
+  file:
+    - go-yq-darwin
+    - go-yq-darwin.sha512.txt
+    - go-yq-linux
+    - go-yq-linux.sha512.txt
+    - go-yq-windows.exe
+    - go-yq-windows.exe.sha512.txt
+  skip_cleanup: true
+  on:
+    tags: true
