@@ -1,7 +1,4 @@
 language: go
-  - provider: script
-    script: go test
-  - provider: script
-    script: ./release.sh
-    on:
-      branch: master
+script:
+  - go test
+  - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; ./release.sh; fi
