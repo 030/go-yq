@@ -37,9 +37,11 @@ func TestDir(t *testing.T) {
 		"path/to/some.yaml": filepath.Join("path", "to"),
 		"hello.yaml":        ".",
 	}
-	for key, value := range keyValue {
+	for file, value := range keyValue {
+		i := input{key: "", file: file}
+
 		expected := value
-		actual := dir(key)
+		actual := i.dir()
 		if expected != actual {
 			t.Errorf("got value: %s, want: %s.", actual, expected)
 		}
@@ -52,9 +54,11 @@ func TestFile(t *testing.T) {
 		"hello.yaml":        "hello",
 	}
 
-	for key, value := range keyValue {
+	for file, value := range keyValue {
+		i := input{key: "", file: file}
+
 		expected := value
-		actual := filename(key)
+		actual := i.filename()
 		if expected != actual {
 			t.Errorf("got value: %s, want: %s.", actual, expected)
 		}

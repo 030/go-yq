@@ -14,17 +14,17 @@ type input struct {
 	key, file string
 }
 
-func (i input) value() string {
-	verifyKey(i.key)
-	keyWithoutFirstDot := strings.Replace(i.key, ".", "", 1)
+func (i input) config() {
+	i.verifyKey()
 
 	viper.SetConfigType("yaml")
+	viper.SetConfigName(i.filename())
+	viper.AddConfigPath(i.dir())
+}
 
-	filename := filename(i.file)
-	viper.SetConfigName(filename)
-
-	dir := dir(i.file)
-	viper.AddConfigPath(dir)
+func (i input) value() string {
+	i.config()
+	keyWithoutFirstDot := strings.Replace(i.key, ".", "", 1)
 
 	err := viper.ReadInConfig()
 	if err != nil {
@@ -39,20 +39,20 @@ func (i input) value() string {
 	return value
 }
 
-func dir(path string) string {
-	return filepath.Dir(path)
+func (i input) dir() string {
+	return filepath.Dir(i.file)
 }
 
-func filename(path string) string {
-	basename := filepath.Base(path)
+func (i input) filename() string {
+	basename := filepath.Base(i.file)
 	filename := strings.TrimSuffix(basename, filepath.Ext(basename))
 
 	return filepath.Base(filename)
 }
 
-func verifyKey(key string) {
-	if !strings.HasPrefix(key, ".") {
-		log.Fatal("Key should start with a dot, i.e.: ."+key+", but was: ", key)
+func (i input) verifyKey() {
+	if !strings.HasPrefix(i.key, ".") {
+		log.Fatal("Key should start with a dot, i.e.: ."+i.key+", but was: ", i.key)
 	}
 }
 
@@ -62,6 +62,5 @@ func main() {
 	}
 
 	i := input{key: os.Args[1], file: os.Args[2]}
-
 	fmt.Println(i.value())
 }
