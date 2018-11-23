@@ -10,17 +10,21 @@ import (
 	"github.com/spf13/viper"
 )
 
-func yamlValue(file string, key string) string {
+type input struct {
+	key, file string
+}
+
+func (i input) config() {
+	i.verifyKey()
+
 	viper.SetConfigType("yaml")
+	viper.SetConfigName(i.filename())
+	viper.AddConfigPath(i.dir())
+}
 
-	verifyKey(key)
-	keyWithoutFirstDot := strings.Replace(key, ".", "", 1)
-
-	filename := filename(file)
-	viper.SetConfigName(filename)
-
-	dir := dir(file)
-	viper.AddConfigPath(dir)
+func (i input) value() string {
+	i.config()
+	keyWithoutFirstDot := strings.Replace(i.key, ".", "", 1)
 
 	err := viper.ReadInConfig()
 	if err != nil {
@@ -28,23 +32,27 @@ func yamlValue(file string, key string) string {
 	}
 	value := fmt.Sprintf("%s", viper.Get(keyWithoutFirstDot))
 
+	if value == "%!s(<nil>)" {
+		log.Fatal("File: ", i.file, " does not contain key: ", i.key)
+	}
+
 	return value
 }
 
-func dir(path string) string {
-	return filepath.Dir(path)
+func (i input) dir() string {
+	return filepath.Dir(i.file)
 }
 
-func filename(path string) string {
-	basename := filepath.Base(path)
+func (i input) filename() string {
+	basename := filepath.Base(i.file)
 	filename := strings.TrimSuffix(basename, filepath.Ext(basename))
 
 	return filepath.Base(filename)
 }
 
-func verifyKey(key string) {
-	if !strings.HasPrefix(key, ".") {
-		log.Fatal("Key should start with a dot, i.e.: ."+key+", but was: ", key)
+func (i input) verifyKey() {
+	if !strings.HasPrefix(i.key, ".") {
+		log.Fatal("Key should start with a dot, i.e.: ."+i.key+", but was: ", i.key)
 	}
 }
 
@@ -53,12 +61,6 @@ func main() {
 		log.Fatal("Usage: go-yq <key e.g. .foo.bar> <filename e.g. input.yaml>")
 	}
 
-	key := os.Args[1]
-	yamlFile := os.Args[2]
-
-	value := yamlValue(yamlFile, key)
-	if value == "" {
-		log.Fatal("File: ", yamlFile, " does not contain key: ", key)
-	}
-	fmt.Println(value)
+	i := input{key: os.Args[1], file: os.Args[2]}
+	fmt.Println(i.value())
 }
