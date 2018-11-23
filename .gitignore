@@ -12,3 +12,4 @@
 *.out
 
 go-yq*
+test.yaml
