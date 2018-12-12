@@ -13,3 +13,5 @@
 
 go-yq*
 test.yaml
+
+vendor
