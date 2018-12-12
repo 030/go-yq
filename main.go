@@ -30,7 +30,7 @@ func (i input) value() string {
 	if err != nil {
 		panic(fmt.Errorf("fatal error config file: %s", err))
 	}
-	value := fmt.Sprintf("%s", viper.Get(keyWithoutFirstDot))
+	value := fmt.Sprintf("%v", viper.Get(keyWithoutFirstDot))
 
 	if value == "%!s(<nil>)" {
 		log.Fatal("File: ", i.file, " does not contain key: ", i.key)

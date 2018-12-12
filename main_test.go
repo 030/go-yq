@@ -34,7 +34,10 @@ firefox_checksum: sha512:49d776
 hello:
   world: hallo wereld
 world: [hola, hallo]
-firefox_version: 64.0
+firefox_version4: 64
+firefox_version3: 64.1
+firefox_version2: "64.0"
+firefox_version: 64.0.0
   `
 
 type T struct {
@@ -79,9 +82,12 @@ func TestYamlValue(t *testing.T) {
 		".foo.bar":                                     "boo",
 		".services.db.image":                           "someimage",
 		".services.db.environment.MYSQL_ROOT_PASSWORD": "somewordpress",
-		".world":           "[hola hallo]",
-		".hello.world":     "hallo wereld",
-		".firefox_version": "64.0",
+		".world":            "[hola hallo]",
+		".hello.world":      "hallo wereld",
+		".firefox_version4": "64",
+		".firefox_version3": "64.1",
+		".firefox_version2": "64.0",
+		".firefox_version":  "64.0.0",
 	}
 
 	for key, value := range keyValue {
