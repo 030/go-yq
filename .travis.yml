@@ -1,6 +1,8 @@
 language: go
 script:
-  - go test
+  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+  - dep ensure -update
+  - go test ./... -cover
   - wget https://gist.githubusercontent.com/030/da7c28869ae69fc4c02634e253ab615b/raw/43df4fbbff30d6e065e0de1270e5ee9ad0803bb7/go-releases.sh
   - chmod +x ./go-releases.sh
   - ./go-releases.sh yq
