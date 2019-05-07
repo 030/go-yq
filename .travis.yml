@@ -1,14 +1,17 @@
 language: go
 go:
   - 1.12.4
+env:
+  global:
+    - SHA512_CMD=sha512sum
+    - GO111MODULE=on
 matrix:
   include:
   - os: linux
     dist: bionic
   - os: osx
+    env: SHA512_CMD="shasum -a 512"
   - os: windows
-env:
-  - GO111MODULE=on
 addons:
   sonarcloud:
     organization: 030-github
@@ -19,7 +22,7 @@ script:
   - export DELIVERABLE="go-yq-${GOOS}"
   - go test -short -cover -v -coverprofile=coverage.out -covermode=atomic ./...
   - go build -o $DELIVERABLE
-  - shasum -a 512 $DELIVERABLE > ${DELIVERABLE}.sha512.txt
+  - $SHA512_CMD $DELIVERABLE > ${DELIVERABLE}.sha512.txt
   - sonar-scanner -Dsonar.projectKey=030_go-yq -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"
 deploy:
   provider: releases
