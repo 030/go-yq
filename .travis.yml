@@ -1,21 +1,35 @@
 language: go
+go:
+  - 1.12.4
+env:
+  global:
+    - SHA512_CMD=sha512sum
+    - GO111MODULE=on
+matrix:
+  include:
+  - os: linux
+    dist: bionic
+  - os: osx
+    env: SHA512_CMD="shasum -a 512"
+  - os: windows
+addons:
+  sonarcloud:
+    organization: 030-github
+    token:
+      secure: $SONAR_TOKEN
 script:
-  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-  - dep ensure -update
-  - go test ./... -cover
-  - wget https://gist.githubusercontent.com/030/da7c28869ae69fc4c02634e253ab615b/raw/43df4fbbff30d6e065e0de1270e5ee9ad0803bb7/go-releases.sh
-  - chmod +x ./go-releases.sh
-  - ./go-releases.sh yq
+  - diff -u <(echo -n) <(gofmt -d ./)
+  - export DELIVERABLE="go-yq-${GOOS}"
+  - go test -short -cover -v -coverprofile=coverage.out -covermode=atomic ./...
+  - go build -o $DELIVERABLE
+  - $SHA512_CMD $DELIVERABLE > ${DELIVERABLE}.sha512.txt
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sonar-scanner -Dsonar.projectKey=030_go-yq -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"; fi
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file:
-    - go-yq-darwin
-    - go-yq-darwin.sha512.txt
-    - go-yq-linux
-    - go-yq-linux.sha512.txt
-    - go-yq-windows.exe
-    - go-yq-windows.exe.sha512.txt
+    - $DELIVERABLE
+    - ${DELIVERABLE}.sha512.txt
   skip_cleanup: true
   on:
     tags: true
