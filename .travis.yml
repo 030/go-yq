@@ -23,7 +23,6 @@ script:
   - go test -short -cover -v -coverprofile=coverage.out -covermode=atomic ./...
   - go build -o $DELIVERABLE
   - $SHA512_CMD $DELIVERABLE > ${DELIVERABLE}.sha512.txt
-  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then choco -h; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then choco install jre8 -y; fi
   - sonar-scanner -Dsonar.projectKey=030_go-yq -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"
 deploy:
