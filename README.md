@@ -1,5 +1,19 @@
 # go-yq
 
+[![Build Status](https://travis-ci.org/030/go-yq.svg?branch=master)](https://travis-ci.org/030/go-yq)
+[![Go Report Card](https://goreportcard.com/badge/github.com/030/go-yq)](https://goreportcard.com/report/github.com/030/go-yq)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=bugs)](https://sonarcloud.io/dashboard?id=030_go-yq)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=code_smells)](https://sonarcloud.io/dashboard?id=030_go-yq)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=coverage)](https://sonarcloud.io/dashboard?id=030_go-yq)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=030_go-yq)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=ncloc)](https://sonarcloud.io/dashboard?id=030_go-yq)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=030_go-yq)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=alert_status)](https://sonarcloud.io/dashboard?id=030_go-yq)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=030_go-yq)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=security_rating)](https://sonarcloud.io/dashboard?id=030_go-yq)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=sqale_index)](https://sonarcloud.io/dashboard?id=030_go-yq)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=030_go-yq)
+
 Golang version of [yq](https://github.com/kislyuk/yq)
 
 ## Rationale
