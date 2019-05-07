@@ -3,7 +3,7 @@ go:
   - 1.12.4
 os:
   - linux
-    dist: trusty
+    dist: bionic
   - osx
   - windows
 env:
