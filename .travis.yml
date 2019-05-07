@@ -1,11 +1,11 @@
 language: go
 go:
   - 1.12.4
-os:
-  - linux
+matrix:
+  - os: linux
     dist: bionic
-  - osx
-  - windows
+  - os: osx
+  - os: windows
 env:
   - GO111MODULE=on
 addons:
