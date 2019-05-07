@@ -11,7 +11,7 @@ script:
   - wget https://gist.githubusercontent.com/030/da7c28869ae69fc4c02634e253ab615b/raw/43df4fbbff30d6e065e0de1270e5ee9ad0803bb7/go-releases.sh
   - chmod +x ./go-releases.sh
   - ./go-releases.sh yq
-  - sonar-scanner -Dsonar.projectKey=030_nexus3-cli -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=main.go,**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"
+  - sonar-scanner -Dsonar.projectKey=go-yq -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=main.go,**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
