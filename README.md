@@ -14,7 +14,7 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=sqale_index)](https://sonarcloud.io/dashboard?id=030_go-yq)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=030_go-yq)
 
-Golang version of [yq](https://github.com/kislyuk/yq)
+jq-style golang equivalent of [yq](https://github.com/kislyuk/yq). [Another yq tool that is written in golang](https://github.com/mikefarah/yq) could be used if one requires more features.
 
 ## Rationale
 
