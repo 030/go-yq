@@ -49,11 +49,7 @@ exit status 1
 [user@localhost go-yq]$ ./go-yq go run main.go .firefox_version ~/dev/ansible-firefox/defaults/main.yml
 ```
 
-returns:
-
-```
-63.0.1
-```
+or
 
 [![dockeri.co](https://dockeri.co/image/utrecht/go-yq)](https://hub.docker.com/r/utrecht/go-yq)
 
