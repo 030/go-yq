@@ -17,11 +17,11 @@
 
 jq-style golang equivalent of [yq](https://github.com/kislyuk/yq). [Another yq tool that is written in golang](https://github.com/mikefarah/yq) could be used if one requires more features.
 
-## Rationale
+## rationale
 
 go-yq was created to prevent that pip has to be installed in order to install yq
 
-## Usage
+## usage
 
 ### help
 
