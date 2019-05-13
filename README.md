@@ -17,11 +17,11 @@
 
 jq-style golang equivalent of [yq](https://github.com/kislyuk/yq). [Another yq tool that is written in golang](https://github.com/mikefarah/yq) could be used if one requires more features.
 
-## Rationale
+## rationale
 
 go-yq was created to prevent that pip has to be installed in order to install yq
 
-## Usage
+## usage
 
 ### help
 
@@ -31,7 +31,7 @@ go-yq was created to prevent that pip has to be installed in order to install yq
 exit status 1
 ```
 
-### example
+### examples
 
 ```
 [user@localhost go-yq]$ ./go-yq go run main.go .firefox_version ~/dev/ansible-firefox/defaults/main.yml
@@ -43,8 +43,16 @@ returns:
 63.0.1
 ```
 
-## Dependencies
+[![dockeri.co](https://dockeri.co/image/utrecht/go-yq)](https://hub.docker.com/r/utrecht/go-yq)
 
 ```
-go get github.com/spf13/viper
+docker run -v /home/ben/dev/ansible-firefox:/ansible-firefox \
+       -it utrecht/go-yq:2.1.0 .firefox_version \
+       /ansible-firefox/defaults/main.yml
+```
+
+returns:
+
+```
+66.0.3
 ```
