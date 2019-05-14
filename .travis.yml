@@ -19,11 +19,11 @@ addons:
       secure: $SONAR_TOKEN
 script:
   - diff -u <(echo -n) <(gofmt -d ./)
-  - export DELIVERABLE="go-yq-${GOOS}"
+  - export DELIVERABLE="go-yq-${TRAVIS_OS_NAME}"
   - go test -short -cover -v -coverprofile=coverage.out -covermode=atomic ./...
   - go build -o $DELIVERABLE
   - $SHA512_CMD $DELIVERABLE > ${DELIVERABLE}.sha512.txt
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sonar-scanner -Dsonar.projectKey=030_go-yq -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then sonar-scanner -Dsonar.projectKey=030_go-yq -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"; fi
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
