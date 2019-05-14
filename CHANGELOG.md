@@ -36,10 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - get a value from yaml using yq
 
 [Unreleased]: https://github.com/030/go-yq/compare/2.1.1...HEAD
-[2.1.1]: https://github.com/030/go-yq/releases/tag/2.1.1
-[2.1.0]: https://github.com/030/go-yq/releases/tag/2.1.0
-[2.0.1]: https://github.com/030/go-yq/releases/tag/2.0.1
-[2.0.0]: https://github.com/030/go-yq/releases/tag/2.0.0
-[1.1.1]: https://github.com/030/go-yq/releases/tag/1.1.1
-[1.1.0]: https://github.com/030/go-yq/releases/tag/1.1.0
+[2.1.1]: https://github.com/030/go-yq/releases/tag/2.1.0...2.1.1
+[2.1.0]: https://github.com/030/go-yq/releases/tag/2.0.1...2.1.0
+[2.0.1]: https://github.com/030/go-yq/releases/tag/2.0.0...2.0.1
+[2.0.0]: https://github.com/030/go-yq/releases/tag/1.1.1...2.0.0
+[1.1.1]: https://github.com/030/go-yq/releases/tag/1.1.0...1.1.1
+[1.1.0]: https://github.com/030/go-yq/releases/tag/1.0.0...1.1.0
 [1.0.0]: https://github.com/030/go-yq/releases/tag/1.0.0
