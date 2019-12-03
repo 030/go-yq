@@ -18,7 +18,7 @@ addons:
     token:
       secure: $SONAR_TOKEN
 script:
-  - diff -u <(echo -n) <(gofmt -d ./)
+  - docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.21.0 golangci-lint run -v
   - export DELIVERABLE="go-yq-${TRAVIS_OS_NAME}"
   - go test -short -cover -v -coverprofile=coverage.out -covermode=atomic ./...
   - go build -o $DELIVERABLE
