@@ -40,14 +40,6 @@ firefox_version2: "64.0"
 firefox_version: 64.0.0
   `
 
-type T struct {
-	A string
-	B struct {
-		RenamedC int   `yaml:"c"`
-		D        []int `yaml:",flow"`
-	}
-}
-
 func createTestYaml() {
 	m := make(map[interface{}]interface{})
 
@@ -61,7 +53,10 @@ func createTestYaml() {
 		log.Fatalf("error: %v", err)
 	}
 
-	ioutil.WriteFile(testYaml, d, 0644)
+	err = ioutil.WriteFile(testYaml, d, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func removeTestYaml() {
