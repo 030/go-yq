@@ -34,6 +34,12 @@ jq-style golang equivalent of [yq](https://github.com/kislyuk/yq). [Another yq t
 
 go-yq was created to prevent that pip has to be installed in order to install yq
 
+## installation
+
+```
+sudo apt -y install https://github.com/030/go-yq/releases/download/2.1.2/go-yq_2.1.2-0.deb
+```
+
 ## usage
 
 ### help
