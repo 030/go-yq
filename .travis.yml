@@ -17,6 +17,8 @@ addons:
     organization: 030-github
     token:
       secure: $SONAR_TOKEN
+before_install:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb && sudo apt-get -y install ./a2deb.deb; fi
 script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.21.0 golangci-lint run -v; fi
   - export DELIVERABLE="go-yq-${TRAVIS_OS_NAME}"
@@ -24,7 +26,7 @@ script:
   - go build -o $DELIVERABLE
   - $SHA512_CMD $DELIVERABLE > ${DELIVERABLE}.sha512.txt
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then sonar-scanner -Dsonar.projectKey=030_go-yq -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb && apt -y install ./a2deb.deb && cp $DELIVERABLE go-yq && a2deb -app go-yq -version ${TRAVIS_TAG} -maintainer "030 <chocolatey030@gmail.com>" -description "jq-style golang equivalent of yq"; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cp $DELIVERABLE go-yq && a2deb -app go-yq -version ${TRAVIS_TAG} -maintainer "030 <chocolatey030@gmail.com>" -description "jq-style golang equivalent of yq"; fi
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
