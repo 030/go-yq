@@ -24,10 +24,12 @@ script:
   - go build -o $DELIVERABLE
   - $SHA512_CMD $DELIVERABLE > ${DELIVERABLE}.sha512.txt
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then sonar-scanner -Dsonar.projectKey=030_go-yq -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then mkdir -p go-yq_${TRAVIS_TAG}-0/usr/local/bin && cp $DELIVERABLE go-yq_${TRAVIS_TAG}-0/usr/local/bin/go-yq && mkdir go-yq_${TRAVIS_TAG}-0/DEBIAN && echo -e "Package: go-yq\nVersion: ${TRAVIS_TAG}\nArchitecture: amd64\nMaintainer: 030 <chocolatey030@gmail.com>\nDescription: go-yq\n jq-style golang equivalent of yq" > go-yq_${TRAVIS_TAG}-0/DEBIAN/control && dpkg-deb --build go-yq_${TRAVIS_TAG}-0; fi
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file:
+    - ${DELIVERABLE}-0.deb
     - $DELIVERABLE
     - ${DELIVERABLE}.sha512.txt
   skip_cleanup: true
