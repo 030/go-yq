@@ -37,7 +37,8 @@ go-yq was created to prevent that pip has to be installed in order to install yq
 ## installation
 
 ```
-sudo apt -y install https://github.com/030/go-yq/releases/download/2.1.2/go-yq_2.1.2-0.deb
+curl -L https://github.com/030/go-yq/releases/download/2.1.2/go-yq_2.1.2-0.deb -o go-yq.deb && \
+sudo apt -y install go-yq.deb
 ```
 
 ## usage
