@@ -147,12 +147,17 @@ func TestFile(t *testing.T) {
 }
 
 func TestVerifyKey(t *testing.T) {
-	i := input{"abc", testYamlFilename}
-
-	err := i.verifyKey()
+	unhappy := input{"abc", testYamlFilename}
+	err := unhappy.verifyKey()
 	want := "Key should start with a dot, i.e.: .abc, but was: abc"
 	if err.Error() != want {
 		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
+	}
+
+	happy := input{".abc", testYamlFilename}
+	err = happy.verifyKey()
+	if err != nil {
+		t.Errorf("No error expected. Got '%v'", err)
 	}
 }
 
