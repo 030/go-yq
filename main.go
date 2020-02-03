@@ -15,8 +15,6 @@ type input struct {
 }
 
 func (i input) config() {
-	i.verifyKey()
-
 	viper.SetConfigType("yaml")
 	viper.SetConfigName(i.filename())
 	viper.AddConfigPath(i.dir())
@@ -63,6 +61,12 @@ func main() {
 	}
 
 	i := input{key: os.Args[1], file: os.Args[2]}
+
+	err := i.verifyKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	v, err := i.value()
 	if err != nil {
 		log.Fatal(err)
