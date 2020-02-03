@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"testing"
 
 	yaml "gopkg.in/yaml.v2"
@@ -161,6 +162,17 @@ func TestValue(t *testing.T) {
 	_, err := i.value()
 	want := "File: test2.yaml does not contain key: .abc"
 	if err.Error() != want {
+		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
+	}
+}
+
+func TestReadInConfig(t *testing.T) {
+	i := input{".abc", "fileDoesNotExist"}
+
+	_, err := i.value()
+	want := "fatal error config file: Config File \"fileDoesNotExist\" Not Found in"
+	matched, _ := regexp.MatchString(want, err.Error())
+	if !matched {
 		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
 	}
 }
