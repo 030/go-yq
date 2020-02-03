@@ -26,9 +26,11 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=sqale_index)](https://sonarcloud.io/dashboard?id=030_go-yq)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=030_go-yq&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=030_go-yq)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2811/badge)](https://bestpractices.coreinfrastructure.org/projects/2811)
+[![codecov](https://codecov.io/gh/030/go-yq/branch/master/graph/badge.svg)](https://codecov.io/gh/030/go-yq)
+[![BCH compliance](https://bettercodehub.com/edge/badge/030/go-yq?branch=master)](https://bettercodehub.com/results/030/go-yq)
 [![GolangCI](https://golangci.com/badges/github.com/golangci/golangci-web.svg)](https://golangci.com/r/github.com/030/go-yq)
 
-jq-style golang equivalent of [yq](https://github.com/kislyuk/yq). [Another yq tool that is written in golang](https://github.com/mikefarah/yq) could be used if one requires more features.
+jq-style golang equivalent of [yq](https://github.com/kislyuk/yq).
 
 ## rationale
 
@@ -37,7 +39,7 @@ go-yq was created to prevent that pip has to be installed in order to install yq
 ## installation
 
 ```
-curl -L https://github.com/030/go-yq/releases/download/2.1.2/go-yq_2.1.2-0.deb -o go-yq.deb && \
+curl -L https://github.com/030/go-yq/releases/download/x.y.z/go-yq_x.y.z-0.deb -o go-yq.deb && \
 sudo apt -y install ./go-yq.deb
 ```
 
@@ -63,7 +65,7 @@ or
 
 ```
 docker run -v /home/ben/dev/ansible-firefox:/ansible-firefox \
-       -it utrecht/go-yq:2.1.0 .firefox_version \
+       -it utrecht/go-yq:x.y.z .firefox_version \
        /ansible-firefox/defaults/main.yml
 ```
 
