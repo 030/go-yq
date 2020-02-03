@@ -22,21 +22,21 @@ func (i input) config() {
 	viper.AddConfigPath(i.dir())
 }
 
-func (i input) value() string {
+func (i input) value() (string, error) {
 	i.config()
 	keyWithoutFirstDot := strings.Replace(i.key, ".", "", 1)
 
 	err := viper.ReadInConfig()
 	if err != nil {
-		panic(fmt.Errorf("fatal error config file: %s", err))
+		return "", fmt.Errorf("fatal error config file: %v", err)
 	}
 	value := fmt.Sprintf("%v", viper.Get(keyWithoutFirstDot))
 
-	if value == "%!s(<nil>)" {
-		log.Fatal("File: ", i.file, " does not contain key: ", i.key)
+	if value == "<nil>" {
+		return "", fmt.Errorf("File: %v does not contain key: %v", i.file, i.key)
 	}
 
-	return value
+	return value, nil
 }
 
 func (i input) dir() string {
@@ -50,10 +50,11 @@ func (i input) filename() string {
 	return filepath.Base(filename)
 }
 
-func (i input) verifyKey() {
+func (i input) verifyKey() error {
 	if !strings.HasPrefix(i.key, ".") {
-		log.Fatal("Key should start with a dot, i.e.: ."+i.key+", but was: ", i.key)
+		return fmt.Errorf("Key should start with a dot, i.e.: .%s, but was: %s", i.key, i.key)
 	}
+	return nil
 }
 
 func main() {
@@ -62,5 +63,10 @@ func main() {
 	}
 
 	i := input{key: os.Args[1], file: os.Args[2]}
-	fmt.Println(i.value())
+	v, err := i.value()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(v)
 }

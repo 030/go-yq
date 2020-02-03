@@ -89,7 +89,7 @@ func TestYamlValue(t *testing.T) {
 		i := input{key: key, file: testYaml}
 
 		expected := value
-		actual := i.value()
+		actual, _ := i.value()
 		if expected != actual {
 			t.Errorf("Value was incorrect 'Check whether the key '%s' resides in the test yaml file', got value: %s, want: %s.", key, actual, expected)
 		}
