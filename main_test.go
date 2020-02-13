@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"testing"
 
 	yaml "gopkg.in/yaml.v2"
@@ -39,6 +40,22 @@ firefox_version3: 64.1
 firefox_version2: "64.0"
 firefox_version: 64.0.0
   `
+
+// See https://stackoverflow.com/a/34102842/2777965
+func TestMain(m *testing.M) {
+	setup()
+	code := m.Run()
+	shutdown()
+	os.Exit(code)
+}
+
+func setup() {
+	createTestYaml()
+}
+
+func shutdown() {
+	removeTestYaml()
+}
 
 func createTestYaml() {
 	m := make(map[interface{}]interface{})
@@ -89,13 +106,11 @@ func TestYamlValue(t *testing.T) {
 		i := input{key: key, file: testYaml}
 
 		expected := value
-		actual := i.value()
+		actual, _ := i.value()
 		if expected != actual {
 			t.Errorf("Value was incorrect 'Check whether the key '%s' resides in the test yaml file', got value: %s, want: %s.", key, actual, expected)
 		}
 	}
-
-	removeTestYaml()
 }
 
 func TestDir(t *testing.T) {
@@ -128,5 +143,41 @@ func TestFile(t *testing.T) {
 		if expected != actual {
 			t.Errorf("got value: %s, want: %s.", actual, expected)
 		}
+	}
+}
+
+func TestVerifyKey(t *testing.T) {
+	unhappy := input{"abc", testYamlFilename}
+	err := unhappy.verifyKey()
+	want := "Key should start with a dot, i.e.: .abc, but was: abc"
+	if err.Error() != want {
+		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
+	}
+
+	happy := input{".abc", testYamlFilename}
+	err = happy.verifyKey()
+	if err != nil {
+		t.Errorf("No error expected. Got '%v'", err)
+	}
+}
+
+func TestValue(t *testing.T) {
+	i := input{".abc", testYaml}
+
+	_, err := i.value()
+	want := "File: test2.yaml does not contain key: .abc"
+	if err.Error() != want {
+		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
+	}
+}
+
+func TestReadInConfig(t *testing.T) {
+	i := input{".abc", "fileDoesNotExist"}
+
+	_, err := i.value()
+	want := "fatal error config file: Config File \"fileDoesNotExist\" Not Found in"
+	matched, _ := regexp.MatchString(want, err.Error())
+	if !matched {
+		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
 	}
 }

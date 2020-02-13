@@ -1,9 +1,12 @@
-module github.com/030/go-yq
+module go-yq
 
+<<<<<<< HEAD
 go 1.13.8
+=======
+go 1.13.8
+>>>>>>> d6e28c951bf02068e5a569d172b8256fcaff6b43
 
 require (
-	github.com/BurntSushi/toml v0.3.1 // indirect
-	github.com/spf13/viper v1.3.2
-	gopkg.in/yaml.v2 v2.2.2
+	github.com/spf13/viper v1.6.2
+	gopkg.in/yaml.v2 v2.2.8
 )
