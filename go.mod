@@ -1,6 +1,6 @@
 module go-yq
 
-go 1.14
+go 1.14.1
 
 require (
 	github.com/spf13/viper v1.6.2
