@@ -1,4 +1,4 @@
-FROM golang:1.12.4-alpine as builder
+FROM golang:1.14.2-alpine
 COPY main.go go.mod go.sum ./go-yq/
 WORKDIR go-yq
 RUN adduser -D -g '' go-yq && \
