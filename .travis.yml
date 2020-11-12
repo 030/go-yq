@@ -1,17 +1,17 @@
 language: go
 go:
-  - 1.14.2
+  - 1.15.4
 env:
   global:
     - SHA512_CMD=sha512sum
     - GO111MODULE=on
 matrix:
   include:
-  - os: linux
-    dist: bionic
-  - os: osx
-    env: SHA512_CMD="shasum -a 512"
-  - os: windows
+    - os: linux
+      dist: bionic
+    - os: osx
+      env: SHA512_CMD="shasum -a 512"
+    - os: windows
 addons:
   sonarcloud:
     organization: 030-github
@@ -22,7 +22,7 @@ script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.21.0 golangci-lint run -v; fi
   - export DELIVERABLE="go-yq-${TRAVIS_OS_NAME}"
   - go test -short -cover -v -coverprofile=coverage.out -covermode=atomic ./...
-  - go build -o $DELIVERABLE
+  - CGO_ENABLED=0 go build -o $DELIVERABLE
   - $SHA512_CMD $DELIVERABLE > ${DELIVERABLE}.sha512.txt
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then sonar-scanner -Dsonar.projectKey=030_go-yq -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then bash <(curl -s https://codecov.io/bash); fi
